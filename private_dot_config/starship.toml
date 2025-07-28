@@ -232,8 +232,6 @@ Unknown = ' '
 Windows = '󰍲 '
 
 [kubernetes]
-format = 'on [⛵ ($user on )$context \($namespace\)](dimmed green) '
-disabled = true
-contexts = [
-  { context_pattern = "dev.local.cluster.k8s", style = "green", symbol = "💔 " },
-]
+format = 'on [⛵ $context \($namespace\)](dimmed green) '
+detect_files = ['k8s']
+disabled = false
