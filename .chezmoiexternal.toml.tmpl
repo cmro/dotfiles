@@ -1,3 +1,33 @@
+{{- $os := .chezmoi.os -}}
+{{- $arch := .chezmoi.arch -}}
+
+{{- /* Normalize arch */ -}}
+{{- if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end -}}
+{{- if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end -}}
+
+{{- /* Neovim asset */ -}}
+{{- $asset := "" -}}
+{{- if eq $os "linux" -}}
+  {{- if eq .chezmoi.arch "arm64" -}}
+    {{- $asset = "nvim-linux-arm64.tar.gz" -}}
+  {{- else -}}
+    {{- $asset = "nvim-linux-x86_64.tar.gz" -}}
+  {{- end -}}
+{{- else if eq $os "darwin" -}}
+  {{- if eq .chezmoi.arch "arm64" -}}
+    {{- $asset = "nvim-macos-arm64.tar.gz" -}}
+  {{- else -}}
+    {{- $asset = "nvim-macos-x86_64.tar.gz" -}}
+  {{- end -}}
+{{- end -}}
+
+[".local/bin/starship"]
+type = "archive-file"
+url = {{ gitHubLatestReleaseAssetURL "starship/starship" (printf "starship-%s-unknown-%s-musl.tar.gz" $arch $os) | quote }}
+refreshPeriod = "168h"
+executable = true
+path = "starship"
+
 [".oh-my-zsh"]
 type = "git-repo"
 url = "https://github.com/ohmyzsh/ohmyzsh.git"
@@ -13,27 +43,15 @@ type = "git-repo"
 url = "https://github.com/zsh-users/zsh-autosuggestions.git"
 refreshPeriod = "168h"
 
-[".local/share"]
+[".local"]
 type = "archive"
-url = "https://github.com/neovim/neovim/releases/latest/download/nvim-{{ .chezmoi.os }}-x86_64.tar.gz"
+url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" $asset | quote }}
 refreshPeriod = "168h"
-
-[".local/bin/starship"]
-type = "archive-file"
-url = {{ gitHubLatestReleaseAssetURL "starship/starship" "starship-i686-unknown-linux-musl.tar.gz" | quote }}
-refreshPeriod = "168h"
-executable = true
-path = "starship"
-
-[".local/bin/lazygit"]
-type = "archive-file"
-url = {{ gitHubLatestReleaseAssetURL "jesseduffield/lazygit" (printf "lazygit_*_Linux_x86_64.tar.gz") | quote }}
-refreshPeriod = "168h"
-executable = true
-path = "lazygit"
+stripComponents = 1
 
 [".local/bin/direnv"]
 type = "file"
-url = {{ gitHubLatestReleaseAssetURL "direnv/direnv" "direnv.linux-amd64" | quote }}
+url = {{ gitHubLatestReleaseAssetURL "direnv/direnv" (printf "direnv.%s-%s" $os .chezmoi.arch) | quote }}
 refreshPeriod = "168h"
 executable = true
+
