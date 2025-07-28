@@ -5,25 +5,30 @@
 {{- if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end -}}
 {{- if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end -}}
 
-{{- /* Neovim asset */ -}}
-{{- $asset := "" -}}
+{{- /* Neovim neovim_asset */ -}}
+{{- $neovim_asset := "" -}}
+{{- $starship_asset := "" -}}
 {{- if eq $os "linux" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
-    {{- $asset = "nvim-linux-arm64.tar.gz" -}}
+    {{- $neovim_asset = "nvim-linux-arm64.tar.gz" -}}
+    {{- $starship_asset = "starship-aarch64-unknown-linux-musl.tar.gz" -}}
   {{- else -}}
-    {{- $asset = "nvim-linux-x86_64.tar.gz" -}}
+    {{- $neovim_asset = "nvim-linux-x86_64.tar.gz" -}}
+    {{- $starship_asset = "starship-x86_64-unknown-linux-musl.tar.gz" -}}
   {{- end -}}
 {{- else if eq $os "darwin" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
-    {{- $asset = "nvim-macos-arm64.tar.gz" -}}
+    {{- $neovim_asset = "nvim-macos-arm64.tar.gz" -}}
+    {{- $starship_asset = "starship-aarch64-apple-darwin.tar.gz" -}}
   {{- else -}}
-    {{- $asset = "nvim-macos-x86_64.tar.gz" -}}
+    {{- $neovim_asset = "nvim-macos-x86_64.tar.gz" -}}
+    {{- $starship_asset = "starship-x86_64-apple-darwin.tar.gz" -}}
   {{- end -}}
 {{- end -}}
 
 [".local/bin/starship"]
 type = "archive-file"
-url = {{ gitHubLatestReleaseAssetURL "starship/starship" (printf "starship-%s-unknown-%s-musl.tar.gz" $arch $os) | quote }}
+url = {{ gitHubLatestReleaseAssetURL "starship/starship" $starship_asset | quote }}
 refreshPeriod = "168h"
 executable = true
 path = "starship"
@@ -45,7 +50,7 @@ refreshPeriod = "168h"
 
 [".local"]
 type = "archive"
-url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" $asset | quote }}
+url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" $neovim_asset | quote }}
 refreshPeriod = "168h"
 stripComponents = 1
 
