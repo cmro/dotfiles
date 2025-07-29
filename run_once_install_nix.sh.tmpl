@@ -1,0 +1,33 @@
+#!/bin/sh
+set -e
+
+echo "[chezmoi] Checking for Nix installation..."
+
+if command -v nix >/dev/null 2>&1; then
+    echo "[chezmoi] Nix is already installed. Skipping."
+    exit 0
+fi
+
+echo "[chezmoi] Installing Nix package manager..."
+
+# OS-Erkennung
+OS="$(uname -s)"
+case "$OS" in
+    Linux*)
+        echo "[chezmoi] Detected Linux"
+        INSTALL_CMD="curl -L https://install.determinate.systems/nix | sh"
+        ;;
+    Darwin*)
+        echo "[chezmoi] Detected macOS"
+        INSTALL_CMD="curl -L https://install.determinate.systems/nix | sh"
+        ;;
+    *)
+        echo "[chezmoi] Unsupported OS: $OS"
+        exit 1
+        ;;
+esac
+
+# Ausführen
+sh -c "$INSTALL_CMD"
+
+echo "[chezmoi] Nix installed successfully."
