@@ -5,43 +5,41 @@
 {{- if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end -}}
 {{- if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end -}}
 
-{{- /* Neovim neovim_asset */ -}}
+{{- /* Asset names */ -}}
 {{- $neovim_asset := "" -}}
 {{- $starship_asset := "" -}}
-{{- $llvm_asset := "" -}}
+{{- $lazygit_asset := "" -}}
+{{- $zig_asset := "" -}}
 {{- if eq $os "linux" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
     {{- $neovim_asset = "nvim-linux-arm64.tar.gz" -}}
     {{- $starship_asset = "starship-aarch64-unknown-linux-musl.tar.gz" -}}
+    {{- $lazygit_asset = "lazygit_*_Linux_arm64.tar.gz " -}}
+    {{- $zig_asset = "zig-aarch64-linux-0.14.1.tar.xz" -}}
   {{- else -}}
     {{- $neovim_asset = "nvim-linux-x86_64.tar.gz" -}}
     {{- $starship_asset = "starship-x86_64-unknown-linux-musl.tar.gz" -}}
+    {{- $lazygit_asset = "lazygit_*_Linux_x86_64.tar.gz " -}}
+    {{- $zig_asset = "zig-x86_64-linux-0.14.1.tar.xz" -}}
   {{- end -}}
 {{- else if eq $os "darwin" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
     {{- $neovim_asset = "nvim-macos-arm64.tar.gz" -}}
     {{- $starship_asset = "starship-aarch64-apple-darwin.tar.gz" -}}
+    {{- $lazygit_asset = "lazygit_*_Darwin_arm64.tar.gz " -}}
+    {{- $zig_asset = "zig-aarch64-macos-0.14.1.tar.xz" -}}
   {{- else -}}
     {{- $neovim_asset = "nvim-macos-x86_64.tar.gz" -}}
     {{- $starship_asset = "starship-x86_64-apple-darwin.tar.gz" -}}
-  {{- end -}}
-{{- end -}}
-
-{{- /* Zig asset */ -}}
-{{- $zig_asset := "" -}}
-{{- if eq $os "linux" -}}
-  {{- if eq .chezmoi.arch "arm64" -}}
-    {{- $zig_asset = "zig-aarch64-linux-0.14.1.tar.xz" -}}
-  {{- else -}}
-    {{- $zig_asset = "zig-x86_64-linux-0.14.1.tar.xz" -}}
-  {{- end -}}
-{{- else if eq $os "darwin" -}}
-  {{- if eq .chezmoi.arch "arm64" -}}
-    {{- $zig_asset = "zig-aarch64-macos-0.14.1.tar.xz" -}}
-  {{- else -}}
+    {{- $lazygit_asset = "lazygit_*_Darwin_x86_64.tar.gz " -}}
     {{- $zig_asset = "zig-x86_64-macos-0.14.1.tar.xz" -}}
   {{- end -}}
 {{- end -}}
+
+[".fzf"]
+type = "git-repo"
+url = "https://github.com/junegunn/fzf.git"
+refreshPeriod = "168h"
 
 [".local/bin/starship"]
 type = "archive-file"
@@ -70,6 +68,13 @@ type = "archive"
 url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" $neovim_asset | quote }}
 refreshPeriod = "168h"
 stripComponents = 1
+
+[".local/bin/lazygit"]
+type = "archive-file"
+url = {{ gitHubLatestReleaseAssetURL "jesseduffield/lazygit" $lazygit_asset | quote }}
+refreshPeriod = "168h"
+executable = true
+path = "lazygit"
 
 [".local/bin/direnv"]
 type = "file"
