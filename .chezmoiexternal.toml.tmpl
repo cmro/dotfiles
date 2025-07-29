@@ -31,15 +31,15 @@
 {{- $zig_asset := "" -}}
 {{- if eq $os "linux" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
-    {{- $zig_asset = "zig-linux-aarch64-0.14.1.tar.xz" -}}
+    {{- $zig_asset = "zig-aarch64-linux-0.14.1.tar.xz" -}}
   {{- else -}}
-    {{- $zig_asset = "zig-linux-x86_64-0.14.1.tar.xz" -}}
+    {{- $zig_asset = "zig-x86_64-linux-0.14.1.tar.xz" -}}
   {{- end -}}
 {{- else if eq $os "darwin" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
-    {{- $zig_asset = "zig-macos-aarch64-0.14.1.tar.xz" -}}
+    {{- $zig_asset = "zig-aarch64-macos-0.14.1.tar.xz" -}}
   {{- else -}}
-    {{- $zig_asset = "zig-macos-x86_64-0.14.1.tar.xz" -}}
+    {{- $zig_asset = "zig-x86_64-macos-0.14.1.tar.xz" -}}
   {{- end -}}
 {{- end -}}
 
