@@ -8,40 +8,8 @@ if command -v nix >/dev/null 2>&1; then
     exit 0
 fi
 
-OS="$(uname -s)"
-ARCH="$(uname -m)"
-
-is_container() {
-    [ -f "/.dockerenv" ] && return 0
-    grep -qaE 'container|docker' /proc/1/cgroup 2>/dev/null && return 0
-    return 1
-}
-
-echo "[chezmoi] Detected OS: $OS, Arch: $ARCH"
-
-INSTALLER="https://install.determinate.systems/nix"
-
-if [ "$OS" = "Darwin" ]; then
-    # macOS → immer Daemon-Modus
-    echo "[chezmoi] Installing daemon mode for macOS..."
-    curl -L "$INSTALLER" | sh -s -- install --no-confirm --daemon
-
-elif [ "$OS" = "Linux" ]; then
-    if is_container; then
-        echo "[chezmoi] Container detected → single-user install"
-        curl -L "$INSTALLER" | sh -s -- install --no-confirm --no-daemon
-    else
-        if [ "$(id -u)" -eq 0 ]; then
-            echo "[chezmoi] Host (root) → daemon install"
-            curl -L "$INSTALLER" | sh -s -- install --no-confirm --daemon
-        else
-            echo "[chezmoi] Host (no root) → single-user install"
-            curl -L "$INSTALLER" | sh -s -- install --no-confirm --no-daemon
-        fi
-    fi
-else
-    echo "[chezmoi] Unsupported OS: $OS"
-    exit 1
-fi
+echo "[chezmoi] Installing Nix (auto-detect mode)..."
+curl -L https://install.determinate.systems/nix \
+  | sh -s -- install --no-confirm
 
 echo "[chezmoi] Nix installation complete."
