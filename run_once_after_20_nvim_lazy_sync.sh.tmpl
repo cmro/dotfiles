@@ -4,3 +4,5 @@ export PATH="{{ .chezmoi.homeDir }}/.local/bin:$PATH"
 
 echo "Running Neovim LazyVim bootstrap..."
 "{{ .chezmoi.homeDir }}/.local/bin/nvim" --headless "+Lazy! sync" +qa
+"{{ .chezmoi.homeDir }}/.local/bin/nvim" --headless -c "Mason" -c "qa"
+"{{ .chezmoi.homeDir }}/.local/bin/nvim" --headless -c "TSUpdateSync all" -c "qa"
