@@ -5,22 +5,27 @@
 {{- if eq $arch "amd64" }}{{ $arch = "x86_64" }}{{ end -}}
 {{- if eq $arch "arm64" }}{{ $arch = "aarch64" }}{{ end -}}
 
+{{- $node_version := "24.4.1" }}
+
 {{- /* Asset names */ -}}
 {{- $neovim_asset := "" -}}
 {{- $starship_asset := "" -}}
 {{- $lazygit_asset := "" -}}
 {{- $zig_asset := "" -}}
+{{- $node_asset := "" -}}
 {{- if eq $os "linux" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
     {{- $neovim_asset = "nvim-linux-arm64.tar.gz" -}}
     {{- $starship_asset = "starship-aarch64-unknown-linux-musl.tar.gz" -}}
     {{- $lazygit_asset = "lazygit_*_Linux_arm64.tar.gz" -}}
     {{- $zig_asset = "zig-aarch64-linux-0.14.1.tar.xz" -}}
+    {{- $node_asset = (printf "node-v%s-linux-arm64.tar.xz" $node_version) -}}
   {{- else -}}
     {{- $neovim_asset = "nvim-linux-x86_64.tar.gz" -}}
     {{- $starship_asset = "starship-x86_64-unknown-linux-musl.tar.gz" -}}
     {{- $lazygit_asset = "lazygit_*_Linux_x86_64.tar.gz" -}}
     {{- $zig_asset = "zig-x86_64-linux-0.14.1.tar.xz" -}}
+    {{- $node_asset = (printf "node-v%s-linux-x64.tar.xz" $node_version) -}}
   {{- end -}}
 {{- else if eq $os "darwin" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
@@ -28,11 +33,13 @@
     {{- $starship_asset = "starship-aarch64-apple-darwin.tar.gz" -}}
     {{- $lazygit_asset = "lazygit_*_Darwin_arm64.tar.gz" -}}
     {{- $zig_asset = "zig-aarch64-macos-0.14.1.tar.xz" -}}
+    {{- $node_asset = (printf "node-v%s-darwin-arm64.tar.xz" $node_version) -}}
   {{- else -}}
     {{- $neovim_asset = "nvim-macos-x86_64.tar.gz" -}}
     {{- $starship_asset = "starship-x86_64-apple-darwin.tar.gz" -}}
     {{- $lazygit_asset = "lazygit_*_Darwin_x86_64.tar.gz" -}}
     {{- $zig_asset = "zig-x86_64-macos-0.14.1.tar.xz" -}}
+    {{- $node_asset = (printf "node-v%s-darwin-x64.tar.xz" $node_version) -}}
   {{- end -}}
 {{- end -}}
 
@@ -85,5 +92,11 @@ executable = true
 [".local/zig"]
 type = "archive"
 url = {{ printf "https://ziglang.org/download/0.14.1/%s" $zig_asset | quote }}
+refreshPeriod = "168h"
+stripComponents = 1
+
+[".local"]
+type = "archive"
+url = {{ printf "https://nodejs.org/dist/v2%s/%s" $node_version $node_asset | quote }}
 refreshPeriod = "168h"
 stripComponents = 1
