@@ -97,6 +97,6 @@ stripComponents = 1
 
 [".local/node"]
 type = "archive"
-url = {{ printf "https://nodejs.org/dist/v2%s/%s" $node_version $node_asset | quote }}
+url = {{ printf "https://nodejs.org/dist/v%s/%s" $node_version $node_asset | quote }}
 refreshPeriod = "168h"
 stripComponents = 1
