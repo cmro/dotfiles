@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+echo "Running Neovim LazyVim bootstrap..."
+"{{ .chezmoi.homeDir }}/.local/bin/nvim" --headless "+Lazy! sync" +qa
