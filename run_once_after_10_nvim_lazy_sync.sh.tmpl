@@ -1,6 +1,18 @@
-#!/bin/bash
-set -e
+set -ex
+
+echo "Shell: $SHELL"
+echo "PATH before: $PATH"
+
+# Source profile explicitly
+source ~/.bashrc || true
+
+echo "PATH after sourcing profiles: $PATH"
+
 export PATH="{{ .chezmoi.homeDir }}/.local/bin:$PATH"
+echo "PATH after prepending local bin: $PATH"
+
+which zig
+which nvim
 
 echo "Running Neovim LazyVim bootstrap..."
 "{{ .chezmoi.homeDir }}/.local/bin/nvim" --headless "+Lazy! sync" +qa
