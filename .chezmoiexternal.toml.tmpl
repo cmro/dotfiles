@@ -8,6 +8,7 @@
 {{- /* Neovim neovim_asset */ -}}
 {{- $neovim_asset := "" -}}
 {{- $starship_asset := "" -}}
+{{- $llvm_asset := "" -}}
 {{- if eq $os "linux" -}}
   {{- if eq .chezmoi.arch "arm64" -}}
     {{- $neovim_asset = "nvim-linux-arm64.tar.gz" -}}
@@ -23,6 +24,22 @@
   {{- else -}}
     {{- $neovim_asset = "nvim-macos-x86_64.tar.gz" -}}
     {{- $starship_asset = "starship-x86_64-apple-darwin.tar.gz" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Zig asset */ -}}
+{{- $zig_asset := "" -}}
+{{- if eq $os "linux" -}}
+  {{- if eq .chezmoi.arch "arm64" -}}
+    {{- $zig_asset = "zig-linux-aarch64-0.14.1.tar.xz" -}}
+  {{- else -}}
+    {{- $zig_asset = "zig-linux-x86_64-0.14.1.tar.xz" -}}
+  {{- end -}}
+{{- else if eq $os "darwin" -}}
+  {{- if eq .chezmoi.arch "arm64" -}}
+    {{- $zig_asset = "zig-macos-aarch64-0.14.1.tar.xz" -}}
+  {{- else -}}
+    {{- $zig_asset = "zig-macos-x86_64-0.14.1.tar.xz" -}}
   {{- end -}}
 {{- end -}}
 
@@ -60,3 +77,8 @@ url = {{ gitHubLatestReleaseAssetURL "direnv/direnv" (printf "direnv.%s-%s" $os 
 refreshPeriod = "168h"
 executable = true
 
+[".local/zig"]
+type = "archive"
+url = {{ printf "https://ziglang.org/download/0.14.1/%s" $zig_asset | quote }}
+refreshPeriod = "168h"
+stripComponents = 1
