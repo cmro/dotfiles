@@ -1,0 +1,10 @@
+#!/bin/sh
+mkdir -p "{{ .chezmoi.homeDir }}/.local/bin"
+
+# npm + npx + corepack
+ln -sf ../node/bin/node "{{ .chezmoi.homeDir }}/.local/bin/node"
+ln -sf ../node/bin/npm "{{ .chezmoi.homeDir }}/.local/bin/npm"
+ln -sf ../node/bin/npx "{{ .chezmoi.homeDir }}/.local/bin/npx"
+ln -sf ../node/bin/corepack "{{ .chezmoi.homeDir }}/.local/bin/corepack"
+# zig
+ln -sf ../zig/zig "{{ .chezmoi.homeDir }}/.local/bin/zig"

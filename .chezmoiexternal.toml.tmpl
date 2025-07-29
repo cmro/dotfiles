@@ -95,7 +95,7 @@ url = {{ printf "https://ziglang.org/download/0.14.1/%s" $zig_asset | quote }}
 refreshPeriod = "168h"
 stripComponents = 1
 
-[".local"]
+[".local/node"]
 type = "archive"
 url = {{ printf "https://nodejs.org/dist/v2%s/%s" $node_version $node_asset | quote }}
 refreshPeriod = "168h"
