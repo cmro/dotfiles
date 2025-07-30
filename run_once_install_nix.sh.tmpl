@@ -25,7 +25,7 @@ INSTALLER="https://releases.nixos.org/nix/nix-${VERSION}/install"
 
 if is_container; then
     echo "[chezmoi] Container detected → single-user install"
-    curl -L "$INSTALLER" | sh -s -- install --no-confirm --no-daemon
+    curl -L "$INSTALLER" | sh -s -- --no-daemon --no-modify-profile
 else
     echo "[chezmoi] Host system → no nix installation"
     exit 0
