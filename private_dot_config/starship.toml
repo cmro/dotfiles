@@ -234,5 +234,5 @@ Windows = '󰍲 '
 
 [kubernetes]
 format = ' on [⛵$context \($namespace\)](dimmed nord7) '
-detect_files = ['k8s']
+detect_files = ['.k8s']
 disabled = false
