@@ -1,3 +1,4 @@
+{{ if (stat "/.dockerenv") }}
 {{- $os := .chezmoi.os -}}
 {{- $arch := .chezmoi.arch -}}
 
@@ -31,13 +32,13 @@
   {{- if eq .chezmoi.arch "arm64" -}}
     {{- $neovim_asset = "nvim-macos-arm64.tar.gz" -}}
     {{- $starship_asset = "starship-aarch64-apple-darwin.tar.gz" -}}
-    {{- $lazygit_asset = "lazygit_*_Darwin_arm64.tar.gz" -}}
+    {{- $lazygit_asset = "lazygit_*_darwin_arm64.tar.gz" -}}
     {{- $zig_asset = "zig-aarch64-macos-0.14.1.tar.xz" -}}
     {{- $node_asset = (printf "node-v%s-darwin-arm64.tar.xz" $node_version) -}}
   {{- else -}}
     {{- $neovim_asset = "nvim-macos-x86_64.tar.gz" -}}
     {{- $starship_asset = "starship-x86_64-apple-darwin.tar.gz" -}}
-    {{- $lazygit_asset = "lazygit_*_Darwin_x86_64.tar.gz" -}}
+    {{- $lazygit_asset = "lazygit_*_darwin_x86_64.tar.gz" -}}
     {{- $zig_asset = "zig-x86_64-macos-0.14.1.tar.xz" -}}
     {{- $node_asset = (printf "node-v%s-darwin-x64.tar.xz" $node_version) -}}
   {{- end -}}
@@ -100,3 +101,4 @@ type = "archive"
 url = {{ printf "https://nodejs.org/dist/v%s/%s" $node_version $node_asset | quote }}
 refreshPeriod = "168h"
 stripComponents = 1
+{{ end }}
