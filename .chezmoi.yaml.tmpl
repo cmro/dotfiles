@@ -28,7 +28,7 @@
 {{- end -}}
 
 {{- /* Container detection */ -}}
-{{- $isContainer := or (stat "/.dockerenv") (ne (env "DEVCONTAINER") "") (ne (env "CODESPACES") "") -}}
+{{- $isContainer := or (ne (stat "/.dockerenv") nil) (ne (env "DEVCONTAINER") "") (ne (env "CODESPACES") "") -}}
 
 {{- if $interactive -}}
 {{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
