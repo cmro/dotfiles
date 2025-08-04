@@ -1,4 +1,4 @@
-{{ if (stat "/.dockerenv") }}
+{{ if .iscontainer }}
 {{- $os := .chezmoi.os -}}
 {{- $arch := .chezmoi.arch -}}
 

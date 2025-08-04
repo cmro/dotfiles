@@ -10,10 +10,5 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 
-# Nix
-if ! [[ "$PATH" =~ "$HOME/.nix-profile/bin:" ]]; then
-    PATH="$HOME/.nix-profile/bin:$PATH"
-fi
-
 export PATH
 eval "$(starship init bash)"

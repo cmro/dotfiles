@@ -19,6 +19,17 @@
 {{-   $email = promptString "email" $email -}}
 {{- end -}}
 
+{{- /* Work or private computer */ -}}
+{{- $environment := "work" -}}
+{{- if hasKey . "environment" -}}
+{{- $environment = .environment -}}
+{{- else if $interactive -}}
+{{-   $environment = promptString "environment (work/private)" $environment -}}
+{{- end -}}
+
+{{- /* Container detection */ -}}
+{{- $isContainer := or (stat "/.dockerenv") (ne (env "DEVCONTAINER") "") (ne (env "CODESPACES") "") -}}
+
 {{- if $interactive -}}
 {{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
@@ -28,3 +39,5 @@ sourceDir: {{ .chezmoi.sourceDir | quote }}
 data:
   name: {{ $name | quote }}
   email: {{ $email | quote }}
+  environment: {{ $environment | quote }}
+  iscontainer: {{ $isContainer }}

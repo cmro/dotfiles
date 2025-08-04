@@ -1,4 +1,5 @@
-#!/bin/sh
+{{ if .iscontainer }}
+#!/bin/bash
 mkdir -p "{{ .chezmoi.homeDir }}/.local/bin"
 
 # npm + npx + corepack
@@ -8,3 +9,4 @@ ln -sf ../node/bin/npx "{{ .chezmoi.homeDir }}/.local/bin/npx"
 ln -sf ../node/bin/corepack "{{ .chezmoi.homeDir }}/.local/bin/corepack"
 # zig
 ln -sf ../zig/zig "{{ .chezmoi.homeDir }}/.local/bin/zig"
+{{ end }}

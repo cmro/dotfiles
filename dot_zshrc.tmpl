@@ -1,0 +1,5 @@
+{{- if eq .environment "private" -}}
+{{-   include ".zshrc_private" -}}
+{{- else if eq .environment "work" -}}
+{{-   include ".zshrc_work" -}}
+{{- end -}}
