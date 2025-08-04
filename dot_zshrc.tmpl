@@ -1,5 +1,5 @@
 {{- if eq .environment "private" -}}
-{{-   include ".zshrc_private" -}}
+{{-   template "zshrc_private.tmpl" . -}}
 {{- else if eq .environment "work" -}}
-{{-   include ".zshrc_work" -}}
+{{-   template "zshrc_work.tmpl" . -}}
 {{- end -}}

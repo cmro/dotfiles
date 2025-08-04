@@ -9,7 +9,7 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/cmroncz/.oh-my-zsh"
+export ZSH="{{ .chezmoi.homeDir }}/.oh-my-zsh"
 
 # Theme
 ZSH_THEME="agnoster"
@@ -109,7 +109,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=245'  # hell grau
 alias ls='colorls'
 # alias vim='nvim'
 
-ROLESDIR="/Users/cmroncz/code/playbooks/ansible-roles"
+ROLESDIR="{{ .chezmoi.homeDir }}/code/playbooks/ansible-roles"
 SARULESDIR="$ROLESDIR/spamassassin/files/var/lib/spamassassin/local"
 
 salint() {
