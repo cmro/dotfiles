@@ -18,13 +18,13 @@
   {{- if eq .chezmoi.arch "arm64" -}}
     {{- $neovim_asset = "nvim-linux-arm64.tar.gz" -}}
     {{- $starship_asset = "starship-aarch64-unknown-linux-musl.tar.gz" -}}
-    {{- $lazygit_asset = "lazygit_*_Linux_arm64.tar.gz" -}}
+    {{- $lazygit_asset = "lazygit_*_linux_arm64.tar.gz" -}}
     {{- $zig_asset = "zig-aarch64-linux-0.14.1.tar.xz" -}}
     {{- $node_asset = (printf "node-v%s-linux-arm64.tar.xz" $node_version) -}}
   {{- else -}}
     {{- $neovim_asset = "nvim-linux-x86_64.tar.gz" -}}
     {{- $starship_asset = "starship-x86_64-unknown-linux-musl.tar.gz" -}}
-    {{- $lazygit_asset = "lazygit_*_Linux_x86_64.tar.gz" -}}
+    {{- $lazygit_asset = "lazygit_*_linux_x86_64.tar.gz" -}}
     {{- $zig_asset = "zig-x86_64-linux-0.14.1.tar.xz" -}}
     {{- $node_asset = (printf "node-v%s-linux-x64.tar.xz" $node_version) -}}
   {{- end -}}
