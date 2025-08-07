@@ -1,0 +1,193 @@
+set nocompatible
+filetype off
+syntax on
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" vundle
+Plugin 'VundleVim/Vundle.vim'
+
+" style
+Plugin 'itchyny/lightline.vim'
+Plugin 'mgee/lightline-bufferline'
+" Plugin 'dracula/vim', { 'name': 'dracula' }
+"Plugin 'ellisonleao/gruvbox', { 'name': 'gruvbox' }
+Plugin 'arcticicestudio/nord-vim'
+
+" snippets
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+
+" comments
+Plugin 'scrooloose/nerdcommenter'
+
+" linting
+Plugin 'dense-analysis/ale'
+
+" rst
+Plugin 'Rykka/InstantRst'
+Plugin 'Rykka/riv.vim'
+
+" python/django linting and autocompletion
+Plugin 'tweekmonster/django-plus.vim'
+Plugin 'Vimjas/vim-python-pep8-indent'
+Plugin 'davidhalter/jedi-vim'
+
+" support for virtualenvs
+Plugin 'plytophogy/vim-virtualenv'
+
+" git integration
+Plugin 'tpope/vim-fugitive'
+
+" autocompletion
+Plugin 'maralla/completor.vim'
+" Plugin 'jiangmiao/auto-pairs'
+
+" latex
+Plugin 'vim-latex/vim-latex'
+
+" file structure
+Plugin 'majutsushi/tagbar'
+
+" ansible
+Plugin 'pearofducks/ansible-vim'
+
+" editorconfig
+Plugin 'editorconfig/editorconfig-vim'
+
+call vundle#end()
+filetype plugin indent on
+
+" The rest of your config follows here
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set softtabstop=4
+set autoindent
+set showmode
+set showcmd
+set cursorline
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+set laststatus=2
+set relativenumber
+set number
+set wrap
+set textwidth=79
+set colorcolumn=80
+set showtabline=2
+set hidden
+set incsearch
+set hlsearch
+set wildmenu
+set splitbelow
+set splitright
+set nofoldenable    " disable folding
+
+" Truecolour, font and colorscheme
+let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+set termguicolors
+colorscheme nord
+
+" Unprintable characters
+set list
+set listchars=tab:▸\ ,eol:¬
+
+
+" Leader
+let mapleader = "ö"
+
+" Maps
+nmap <leader>1 <Plug>lightline#bufferline#go(1)
+nmap <leader>2 <Plug>lightline#bufferline#go(2)
+nmap <leader>3 <Plug>lightline#bufferline#go(3)
+nmap <leader>4 <Plug>lightline#bufferline#go(4)
+nmap <leader>5 <Plug>lightline#bufferline#go(5)
+nmap <leader>6 <Plug>lightline#bufferline#go(6)
+nmap <leader>7 <Plug>lightline#bufferline#go(7)
+nmap <leader>8 <Plug>lightline#bufferline#go(8)
+nmap <leader>9 <Plug>lightline#bufferline#go(9)
+nmap <leader>0 <Plug>lightline#bufferline#go(10)
+nnoremap <leader><space> :noh<cr>
+nnoremap <leader>bn :bnext<CR>
+nnoremap <leader>bp :bprevious<CR>
+nnoremap <leader>tb :Tagbar<cr>
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k:h g:lightline.colorscheme
+noremap <C-l> <C-w>l
+nmap <leader>tw0 :set tw=0<CR>
+nmap <leader>twd :set tw=79<CR>
+
+"UltiSnips
+let g:ultisnips_python_style="numpy"
+" Solve ycm ultisnips key mapping problem
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" lightline configuration
+let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+" lightline buffer maps
+let g:lightline#bufferline#show_number  = 1
+let g:lightline#bufferline#shorten_path = 0
+let g:lightline#bufferline#unnamed      = '[No Name]'
+let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type = {'buffers': 'tabsel'}
+
+" rst support in tagbar
+let g:tagbar_type_rst = {
+    \ 'ctagstype': 'rst',
+    \ 'ctagsbin' : '$HOME/bin/rst2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [
+        \ 's:sections',
+        \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+        \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+\ }
+
+"text width for git commits is 72 characters
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" use tab to select completion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+
+" Ale configuration
+let g:ale_linters = {
+      \   'python': ['flake8', 'pylint'],
+      \   'ansible': ['ansible-lint', 'yamllint']
+      \}
+
+let g:ale_fixers = {
+      \    '*': ['remove_trailing_lines', 'trim_whitespace', 'prettier'],
+      \    'python': ['yapf'],
+      \    'yaml': ['yamlfix'],
+      \}
+nmap <F10> :ALEFix<CR>
+"let g:ale_fix_on_save = 1
+
+"ansible-vim
+let g:ansible_unindent_after_newline = 1
+au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+
