@@ -60,7 +60,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git pip pyenv zsh-autosuggestions autojump kubectl kubectx docker docker-compose)
+plugins=(git pip pyenv zsh-autosuggestions autojump kubectl kubectx docker docker-compose alias-finder)
 
 # completions
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -156,10 +156,10 @@ export PODMAN_COMPOSE_PROVIDER=podman-compose
 RPS1='$(kubectx_prompt_info)'
 
 # gpg agent
-GPG_TTY=$(tty)
-export GPG_TTY
+# GPG_TTY=$(tty)
+# export GPG_TTY
 # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
+# gpgconf --launch gpg-agent
 
 eval "$(gdircolors ~/.dircolors.nord)"
 
@@ -174,4 +174,12 @@ eval "$(pyenv init -)"
 # Fix double virtual env in starship
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 
+# alias-finder
+zstyle ':omz:plugins:alias-finder' autoload yes
+
 eval "$(starship init zsh)"
+
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/cmroncz/.lmstudio/bin"
+# End of LM Studio CLI section
