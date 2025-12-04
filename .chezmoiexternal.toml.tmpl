@@ -44,10 +44,10 @@
   {{- end -}}
 {{- end -}}
 
-{# [".fzf"]
-type = "git-repo"
-url = "https://github.com/junegunn/fzf.git"
-refreshPeriod = "168h" #}
+# [".fzf"]
+# type = "git-repo"
+# url = "https://github.com/junegunn/fzf.git"
+# refreshPeriod = "168h"
 
 [".local/bin/starship"]
 type = "archive-file"
@@ -71,34 +71,34 @@ type = "git-repo"
 url = "https://github.com/zsh-users/zsh-autosuggestions.git"
 refreshPeriod = "168h"
 
-{# [".local"]
-type = "archive"
-url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" $neovim_asset | quote }}
-refreshPeriod = "168h"
-stripComponents = 1
-
-[".local/bin/lazygit"]
-type = "archive-file"
-url = {{ gitHubLatestReleaseAssetURL "jesseduffield/lazygit" $lazygit_asset | quote }}
-refreshPeriod = "168h"
-executable = true
-path = "lazygit"
-
-[".local/bin/direnv"]
-type = "file"
-url = {{ gitHubLatestReleaseAssetURL "direnv/direnv" (printf "direnv.%s-%s" $os .chezmoi.arch) | quote }}
-refreshPeriod = "168h"
-executable = true
-
-[".local/zig"]
-type = "archive"
-url = {{ printf "https://ziglang.org/download/0.14.1/%s" $zig_asset | quote }}
-refreshPeriod = "168h"
-stripComponents = 1
-
-[".local/node"]
-type = "archive"
-url = {{ printf "https://nodejs.org/dist/v%s/%s" $node_version $node_asset | quote }}
-refreshPeriod = "168h"
-stripComponents = 1
-{{ end }} #}
+# [".local"]
+# type = "archive"
+# url = {{ gitHubLatestReleaseAssetURL "neovim/neovim" $neovim_asset | quote }}
+# refreshPeriod = "168h"
+# stripComponents = 1
+# 
+# [".local/bin/lazygit"]
+# type = "archive-file"
+# url = {{ gitHubLatestReleaseAssetURL "jesseduffield/lazygit" $lazygit_asset | quote }}
+# refreshPeriod = "168h"
+# executable = true
+# path = "lazygit"
+# 
+# [".local/bin/direnv"]
+# type = "file"
+# url = {{ gitHubLatestReleaseAssetURL "direnv/direnv" (printf "direnv.%s-%s" $os .chezmoi.arch) | quote }}
+# refreshPeriod = "168h"
+# executable = true
+# 
+# [".local/zig"]
+# type = "archive"
+# url = {{ printf "https://ziglang.org/download/0.14.1/%s" $zig_asset | quote }}
+# refreshPeriod = "168h"
+# stripComponents = 1
+# 
+# [".local/node"]
+# type = "archive"
+# url = {{ printf "https://nodejs.org/dist/v%s/%s" $node_version $node_asset | quote }}
+# refreshPeriod = "168h"
+# stripComponents = 1
+# {{ end }}
