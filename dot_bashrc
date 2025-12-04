@@ -12,3 +12,8 @@ fi
 
 export PATH
 eval "$(starship init bash)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/cmroncz/.lmstudio/bin"
+# End of LM Studio CLI section
+
